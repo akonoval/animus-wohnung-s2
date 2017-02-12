@@ -1,0 +1,21 @@
+<!-- custom CSS -->
+
+.text-align-center{
+    text-align:center;
+}
+
+#edit-flat input.btn {
+    margin-left: 20px;
+}
+
+.modal-body {
+    height: 400px;
+}
+
+input.ng-invalid.ng-touched {
+    border-color: #e74c3c;
+}
+
+p.allert-issue {
+    color: #e74c3c;
+}

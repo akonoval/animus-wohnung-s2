@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Wohnungen</title>
+
+        <!-- include bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        
+        
+    </head>
+    <body>
+        <div class="container" ng-app="animusApp" ng-controller="cntrl">
+            <div class="row">
+                <div class="col s12">
+                    <h4>Wohnungen</h4>
+
+                                        <!-- modal for creating new flat -->
+                    <div id="modal-flat-form" class="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form name="newFlatForm" novalidate>
+
+                                    <div class="modal-header">
+                                        <button type="button"
+                                                class="close"
+                                                data-dismiss="modal"
+                                                ng-click="closeModal()">&times;</button>
+                                        <h4 class="modal-title">Erstellen Sie eine neue Wohnung</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <input ng-model="address"
+                                                   name="address"
+                                                   type="text"
+                                                   class="form-control"
+                                                   id="address"
+                                                   placeholder="Type address here..." required>
+                                            <p ng-show="newFlatForm.address.$invalid && newFlatForm.address.$touched " 
+                                               class="allert-issue help-block">Adressfeld erforderlich.</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="price">Kaltmiete</label>
+                                            <input ng-model="price"
+                                                   name="price"
+                                                   type="number"
+                                                   class="form-control"
+                                                   id="price" 
+                                                   placeholder="Type price here..." required>
+                                            <p ng-show="newFlatForm.price.$invalid && newFlatForm.price.$touched " 
+                                               class="allert-issue help-block">Die Kaltmiete ist erforderlich und nur numerisch zulässig.</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="area">Wohnfläche</label>
+                                            <input ng-model="area"
+                                                   name="area"
+                                                   type="number"
+                                                   class="form-control"
+                                                   id="area"
+                                                   placeholder="Type area here..." required>
+                                            <p ng-show="newFlatForm.area.$invalid && newFlatForm.area.$touched " 
+                                               class="allert-issue help-block">Die Wohnfläche ist erforderlich und nur numerisch zulässig.</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="rooms">Zimmeranzahl</label>
+                                            <input ng-model="rooms"
+                                                   name="rooms"
+                                                   type="number"
+                                                   class="form-control"
+                                                   id="rooms"
+                                                   placeholder="Type rooms count here..." required>
+                                            <p ng-show="newFlatForm.rooms.$invalid && newFlatForm.rooms.$touched " 
+                                               class="allert-issue help-block">Die Zimmeranzahl ist erforderlich und nur numerisch zulässig.</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer" data-toggle="tooltip" title="Füllen Sie, bitte, alle Felde aus um zu speichern!">
+                                        <button type="button" 
+                                                ng-disabled="newFlatForm.$invalid"
+                                                class="btn btn-default" 
+                                                data-dismiss="modal" 
+                                                id="btn-create-flat"
+                                                ng-click="createFlat()">Speichern</button>
+                                        <button type="button"
+                                                ng-disabled="newFlatForm.$invalid"
+                                                class="btn btn-default"
+                                                data-dismiss="modal"
+                                                id="btn-update-flat"
+                                                ng-click="updateFlat()">Aktualisieren</button>
+                                        <button type="button"
+                                                class="btn btn-defaul"
+                                                data-dismiss="modal"
+                                                ng-click="closeModal()">Schließen</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div id="body">
+                        <!-- used for searching the current list -->
+                        <input type="text" ng-model="search" class="form-control" placeholder="Search ..." />
+
+                        <!-- table that shows flats record list -->
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Address</th>
+                                    <th class="text-align-center">Kaltmiete</th>
+                                    <th class="text-align-center">Wohnfläche</th>
+                                    <th class="text-align-center">Zimmer</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-init="getAll()">
+                                <tr ng-repeat="d in flats | filter:search">
+                                    <td>{[{d.id}]}</td>
+                                    <td>{[{d.address}]}</td>
+                                    <td>{[{d.price}]}</td>
+                                    <td>{[{d.area}]}</td>
+                                    <td>{[{d.rooms}]}</td>
+                                    <td>
+                                        <button ng-click="readOne(d.id);">Bearbeiten</button>
+                                        <button ng-click="deleteFlat(d.id);">Löschen</button>
+                                    </td>
+                                    <td><a href="{[{d.link}]}">Anzeigen / Senden</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                                        
+                    <!-- floating button for creating flat -->
+                    <div class="fixed-action-btn" style="bottom:45px; right:24px;">
+                        <input type="button" value="Neue Wohnung hinzufügen" id="btn-add-flat" ng-click="showCreateForm()">
+                    </div>
+                </div> <!-- end col s12 -->
+            </div>
+        </div> <!-- end container -->
+
+        <!-- include jquery -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <!-- include angular js -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+        <!-- include custom js -->
+        <script src="{{ asset('js/app.js') }}"></script>
+
+
+    </body>
+</html>

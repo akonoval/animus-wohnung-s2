@@ -1,0 +1,13 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_pgsql
+    database_host: 127.0.0.1
+    database_port: 5432
+    database_name: animus_s_db
+    database_user: postgres
+    database_password: pA23L16K03
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: konoval.olenka@gmail.com
+    mailer_password: konoval1982
+    secret: daf7998d506afdedaf23ccaaad453d1550dab462

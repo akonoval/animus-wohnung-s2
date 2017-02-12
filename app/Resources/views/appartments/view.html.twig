@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Wohnung Beschreibung</title>        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+    </head>
+    <body>
+
+        <div>
+            <div id="info-block">
+                {% if alert.link_msg is defined %}
+                    <div class="alert alert-info" role="alert">{{ alert.link_msg }}</div>
+                {% endif %}
+
+                {% if alert.status is defined %}
+                    {% if alert.status == 0 %}
+                        <div class="alert alert-danger" role="alert">{{ alert.msg }}</div>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">{{ alert.msg }}</div>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+            <h4>Wohnung Blick</h4>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div>
+                        <label>Wohnung ID:</label>
+                        {{ appartments.id }}
+                    </div>
+                    <div>
+                        <label>Address:</label>
+                        {{ appartments.address }}
+                    </div>
+                    <div>   
+                        <label>Kaltmiete:</label>
+                        {{ appartments.price }}
+                    </div>
+                    <div>   
+                        <label>Wohnfläche:</label>
+                        {{ appartments.area }}
+                    </div>
+                    <div>   
+                        <label>Zimmer:</label>
+                        {{ appartments.rooms }}
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="view">
+                        <div>
+                            <input type="hidden" name="id" value="{{ appartments.id }}">
+                            <label>Email</label>
+                            <input type="email" name="email" ng-model="text" required>
+                            <input type="submit" name="send" value="Senden Sie den Bearbeiten Link zu dieser E-Mail.">
+                        </div>
+                    </form>     
+                </div>
+            </div>
+
+        </div>
+
+        <!-- include jquery -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- include bootstrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <!-- include angularJS -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    </body>
+</html>
